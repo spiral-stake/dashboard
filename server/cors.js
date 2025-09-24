@@ -1,4 +1,4 @@
-exports.corsOption = {
+export const corsOption = {
   origin: (origin, callback) => {
     if (
       !origin ||
