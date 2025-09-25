@@ -25,8 +25,9 @@ const LeverageTable = ({
                 User Address
               </th>
               <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Amount Collateral
+                Amount Deposited
               </th>
+
               {/* <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Status
               </th> */}
@@ -45,8 +46,9 @@ const LeverageTable = ({
                   {row.positionId.slice(0, 42)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">
-                  ${row.amountCollateralInUsd}
+                  ${row.amountDepositedInUsd}
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                   <div className="flex items-center space-x-2">
                     {row.open ? (

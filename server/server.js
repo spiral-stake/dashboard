@@ -33,12 +33,16 @@ app.post(
 app.post(
   "/leverage/open",
   catchAsync(async (req, res) => {
-    const { user, positionId, amountCollateralInUsd } = req.body;
+    const { user, positionId, amountDepositedInUsd, atImpliedApy, atBorrowApy, desiredLtv } =
+      req.body;
 
     const newLevergePosition = new LeveragePositions({
-      positionId: user + positionId,
-      amountCollateralInUsd,
       open: true,
+      positionId: user + positionId,
+      amountDepositedInUsd,
+      atImpliedApy,
+      atBorrowApy,
+      desiredLtv,
     });
 
     await newLevergePosition.save();
@@ -49,11 +53,11 @@ app.post(
 app.put(
   "/leverage/close",
   catchAsync(async (req, res) => {
-    const { user, positionId } = req.body;
+    const { user, positionId, amountReturnedInUsd } = req.body;
 
     const closedLeveragePosition = await LeveragePositions.findOneAndUpdate(
       { positionId: user + positionId },
-      { $set: { open: false } }
+      { $set: { open: false, amountReturnedInUsd } }
     );
 
     if (!closedLeveragePosition) {
@@ -72,7 +76,7 @@ app.get(
   "/leveragePositions",
   catchAsync(async (req, res) => {
     const leveragePositions = await LeveragePositions.find().sort({
-      amountCollateralInUsd: -1,
+      amountDepositedInUsd: -1,
     });
 
     if (!leveragePositions) {
@@ -111,13 +115,13 @@ const updateMetrics = async () => {
   let tvl = 0;
   leveragePositions.forEach((position) => {
     if (position.open) {
-      tvl += position.amountCollateralInUsd;
+      tvl += position.amountDepositedInUsd;
     }
   });
 
   let amountDeposited = 0;
   leveragePositions.forEach((position) => {
-    amountDeposited += position.amountCollateralInUsd;
+    amountDeposited += position.amountDepositedInUsd;
   });
 
   const newMetric = new Metrics({ userCount, tvl, amountDeposited });

@@ -5,7 +5,8 @@ export interface Metrics {
 }
 export interface leveragePosition {
   positionId: string;
-  amountCollateralInUsd: number;
+  amountDepositedInUsd: number;
+  amountReturnedInUsd: number;
   open: boolean;
   // collateralToken:String,
   // loanToken:String,

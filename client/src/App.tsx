@@ -14,10 +14,16 @@ function App() {
     const fetchData = async () => {
       try {
         setLoading(true);
+
+        const baseUrl = import.meta.env.VITE_ENV === "prod"
+          ? "https://api.spiralstake.xyz"
+          : "http://localhost:5000";
+
         const [leverageRes, metricsRes] = await Promise.all([
-          axios.get("https://dapi.spiralstake.xyz/leveragePositions"),
-          axios.get("https://dapi.spiralstake.xyz/metrics"),
+          axios.get(`${baseUrl}/leveragePositions`),
+          axios.get(`${baseUrl}/metrics`),
         ]);
+
         setLeveragePositions(leverageRes.data);
         setMetrics(metricsRes.data);
       } catch (error) {
@@ -32,22 +38,7 @@ function App() {
     // newUser();
   }, []);
 
-  // const openLevergeposition = async () => {
-  //   await axios.post(
-  //     "https://dapi.spiralstake.xyz/leverage/open",
-  //     {
-  //       user: "AMOGH",
-  //       amountCollateralInUsd: 100,
 
-  //     }
-  //   );
-  // };
-
-  // const newUser = async () => {
-  //   await axios.post("https://dapi.spiralstake.xyz/user", {
-  //     address: "0x23232323",
-  //   });
-  // };
 
   return (
     <>
