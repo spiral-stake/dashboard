@@ -33,6 +33,7 @@ const LeverageTable = ({
               </th> */}
             </tr>
           </thead>
+
           <tbody className="bg-white divide-y divide-gray-200">
             {leveragePositions.filter((leveragePosition) => leveragePosition.positionId.slice(0, 42) !== "0x386fB147faDb206fb7Af36438E6ae1f8583f99dd".toLowerCase()).map((row, index) => (
               <tr
