@@ -4,11 +4,17 @@ import axios from "axios";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
 import type { Metrics } from "./types";
+import FlashLeverage from "./contract-hooks/FlashLeverage";
+import { useChainId } from "wagmi";
 
 function App() {
+   const [flashLeverage, setFlashLeverage] = useState<FlashLeverage>();
   const [leveragePositions, setLeveragePositions] = useState<any[]>([]);
   const [metrics, setMetrics] = useState<Metrics[]>([]);
   const [loading, setLoading] = useState(true);
+
+
+    const appChainId = useChainId();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,12 +44,26 @@ function App() {
     // newUser();
   }, []);
 
+   useEffect(() => {
+    /**
+     * @dev on appChainId change, reset the collateralTokens and positionManager according to the chain
+     */
+    async function handleChainChange() {
+      const [_flashLeverage] = await Promise.all([
+        FlashLeverage.createInstance(appChainId),
+      ]);
+      setFlashLeverage(_flashLeverage);
+    }
+
+    handleChainChange();
+  }, [appChainId]);
+
 
 
   return (
     <>
       {!loading && (
-        <Dashboard leveragePositions={leveragePositions} metrics={metrics} />
+        <Dashboard flashLeverage={flashLeverage} leveragePositions={leveragePositions} metrics={metrics} />
       )}
     </>
   );
