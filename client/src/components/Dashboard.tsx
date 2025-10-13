@@ -2,11 +2,15 @@ import UsersChart from "./UserChart";
 import LeverageTable from "./LeverageTable";
 import TvlChart from "./TvlChart";
 import type { leveragePosition, Metrics } from "../types";
+import type FlashLeverage from "../contract-hooks/FlashLeverage";
+import AllLeverages from "./AllLeverages";
 
 const Dashboard = ({
+  flashLeverage,
   leveragePositions,
   metrics,
 }: {
+    flashLeverage: FlashLeverage;
   leveragePositions: leveragePosition[];
   metrics: Metrics[];
 }) => {
@@ -28,7 +32,10 @@ const Dashboard = ({
         </div>
 
         {/* Leverage Table */}
-        <LeverageTable leveragePositions={leveragePositions} />
+        {/* <LeverageTable leveragePositions={leveragePositions} /> */}
+
+        {/* new leverage positions */}
+        <AllLeverages flashLeverage={flashLeverage} leveragePositions={leveragePositions}/>
       </div>
     </div>
   );
