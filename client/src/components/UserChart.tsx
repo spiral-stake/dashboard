@@ -10,12 +10,12 @@ const UsersChart = ({ metrics }: { metrics: Metrics[] }) => {
   const range = maxUsers - minUsers || 1; // Prevent division by zero
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 py-10 transition-all duration-300 hover:shadow-xl">
+    <div className="rounded-xl shadow-lg p-6 py-10 transition-all duration-300">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-gray-800">Number of Users</h3>
+        <h3 className="text-xl font-bold">Number of Users</h3>
         <div className="flex items-center space-x-2">
-          <Users className="w-5 h-5 text-blue-600" />
-          <span className="text-2xl font-bold text-blue-600">
+          <Users className="w-5 h-5" />
+          <span className="text-2xl font-bold">
             {metrics[metrics.length - 1].userCount}
           </span>
         </div>
@@ -23,19 +23,6 @@ const UsersChart = ({ metrics }: { metrics: Metrics[] }) => {
 
       <div className="relative h-48 mt-4">
         <svg className="w-full h-full" viewBox="0 0 400 200">
-          {/* Grid lines */}
-          {[0, 1, 2, 3, 4].map((i) => (
-            <line
-              key={i}
-              x1="0"
-              y1={i * 48}
-              x2="400"
-              y2={i * 48}
-              stroke="#f3f4f6"
-              strokeWidth="1"
-            />
-          ))}
-
           {/* Line path */}
           <path
             d={metrics
@@ -46,7 +33,7 @@ const UsersChart = ({ metrics }: { metrics: Metrics[] }) => {
               })
               .join(" ")}
             fill="none"
-            stroke="url(#blueGradient)"
+            stroke="#fff"
             strokeWidth="3"
             className="drop-shadow-sm"
           />
@@ -61,7 +48,7 @@ const UsersChart = ({ metrics }: { metrics: Metrics[] }) => {
                 cx={x}
                 cy={y}
                 r="4"
-                fill="#3b82f6"
+                fill="#fff"
                 className="hover:r-6 transition-all duration-200 cursor-pointer"
               />
             );

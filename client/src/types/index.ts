@@ -1,5 +1,17 @@
 import BigNumber from "bignumber.js";
 
+export interface Metrics {
+  userCount: number;
+  tvl: number;
+  amountDeposited: number;
+}
+export interface ServerLeveragePosition {
+  positionId: string;
+  amountDepositedInUsd: number;
+  amountReturnedInUsd: number;
+  open: boolean;
+}
+
 export interface Token {
   address: string;
   name: string;
@@ -36,17 +48,24 @@ export interface TokenInfo {
 
 export interface LeveragePosition {
   open: boolean;
+  liquidated: boolean;
   owner: string;
+  userProxy: string;
   id: number; // user => LeveragePosition[index]
   collateralToken: CollateralToken;
   amountCollateral: BigNumber;
   amountLeveragedCollateral: BigNumber;
   sharesBorrowed: bigint;
   amountLoan: BigNumber;
-  amountYield: BigNumber;
   ltv: string;
   amountCollateralInLoanToken: BigNumber;
-  impliedApy: string;
+  amountDepositedInUsd: BigNumber;
+  amountReturnedInUsd?: BigNumber;
+  isMatured: boolean;
+  leverage: string;
+  leverageApy?: string;
+  positionValueInUsd: BigNumber;
+  yieldGenerated?: BigNumber;
 }
 
 export interface InternalSwapData {

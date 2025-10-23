@@ -1,7 +1,8 @@
-import { Token, CollateralToken } from "../types/index";
+import type { Token, CollateralToken } from "../types/index.ts";
 import { Base } from "./Base.ts";
 import { abi as FLASH_LEVERAGE_CORE_ABI } from "../abi/FlashLeverageCore.sol/FlashLeverageCore.json";
 import { formatUnits, parseUnits } from "../utils/formatUnits.ts";
+import { readToken } from "../api-services/contractsData.ts";
 import BigNumber from "bignumber.js";
 
 export default class FlashLeverageCore extends Base {
@@ -18,6 +19,22 @@ export default class FlashLeverageCore extends Base {
 
   constructor(flashLeverageAddress: string) {
     super(flashLeverageAddress, FLASH_LEVERAGE_CORE_ABI);
+  }
+
+  static async createInstance(chainId: number) {
+    try {
+      const [{ flashLeverageCoreAddress }, _usdc] = await Promise.all([
+        import(`../addresses/${chainId}.json`),
+        readToken(chainId, "USDC"),
+      ]);
+
+      const instance = new FlashLeverageCore(flashLeverageCoreAddress);
+      instance.usdc = _usdc;
+
+      return instance;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   /////////////////////////
@@ -45,6 +62,10 @@ export default class FlashLeverageCore extends Base {
       collateralToken.address,
       loanToken.address,
     ]);
+  }
+
+  async getOrCreateUserProxy(user: string, desiredLtv: bigint) {
+    return this.read("getOrCreateUserProxy", [user, desiredLtv]);
   }
 
   async getMaxLtv(collateralToken: CollateralToken, loanToken: Token) {

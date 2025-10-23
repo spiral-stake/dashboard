@@ -1,7 +1,8 @@
 import { TrendingUp } from "lucide-react";
-import type { Metrics } from "../types";
+import type { LeveragePosition, Metrics } from "../types";
+import { formatNumber } from "../utils/formatNumber";
 
-const TvlChart = ({ metrics }: { metrics: Metrics[] }) => {
+const TvlChart = ({ metrics, allLeveragePositions }: { metrics: Metrics[], allLeveragePositions: LeveragePosition[] }) => {
   if (!metrics || metrics.length === 0) return null;
 
   const maxTvl = Math.max(...metrics.map((d) => d.tvl));
@@ -9,13 +10,22 @@ const TvlChart = ({ metrics }: { metrics: Metrics[] }) => {
   const range = maxTvl - minTvl || 1; // Avoid division by zero
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 py-10 transition-all duration-300 hover:shadow-xl">
+    <div className="rounded-xl shadow-lg p-6 py-10 transition-all duration-300 hover:shadow-xl">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-gray-800">TVL</h3>
+        <h3 className="text-xl font-bold">TVL</h3>
         <div className="flex items-center space-x-2">
-          <TrendingUp className="w-5 h-5 text-green-600" />
-          <span className="text-2xl font-bold text-green-600">
-            ${metrics[metrics.length - 1].tvl.toLocaleString()}
+          <TrendingUp className="w-5 h-5" />
+          <span className="text-2xl font-bold">
+            {formatNumber(allLeveragePositions.reduce(
+              (total, current) =>
+                current.open
+                  ? total + Number(current.amountDepositedInUsd)
+                  : total,
+              0
+            ))}
+            {" ("}
+            {allLeveragePositions.filter((pos) => pos.open).length}
+            {")"}
           </span>
         </div>
       </div>
@@ -30,7 +40,7 @@ const TvlChart = ({ metrics }: { metrics: Metrics[] }) => {
               y1={i * 48}
               x2="400"
               y2={i * 48}
-              stroke="#f3f4f6"
+              stroke=""
               strokeWidth="1"
             />
           ))}
@@ -45,7 +55,7 @@ const TvlChart = ({ metrics }: { metrics: Metrics[] }) => {
               })
               .join(" ")}
             fill="none"
-            stroke="url(#greenGradient)"
+            stroke="#fff"
             strokeWidth="3"
             className="drop-shadow-sm"
           />
@@ -60,7 +70,7 @@ const TvlChart = ({ metrics }: { metrics: Metrics[] }) => {
                 cx={x}
                 cy={y}
                 r="4"
-                fill="#10b981"
+                fill="#fff"
                 className="hover:r-6 transition-all duration-200 cursor-pointer"
               />
             );
