@@ -7,7 +7,7 @@ export const HoverInfo = ({ content }: { content: JSX.Element }) => {
         onClick={() => {}}
         src={infoIcon}
         alt=""
-        className="w-4 h-4 rotate-180"
+        className="w-[16px] h-[16px] rotate-180"
       />
 
       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 invisible opacity-100 group-hover:visible transition-all duration-200">

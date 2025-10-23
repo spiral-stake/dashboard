@@ -66,6 +66,8 @@ export interface LeveragePosition {
   leverageApy?: string;
   positionValueInUsd: BigNumber;
   yieldGenerated?: BigNumber;
+   openedOn: Number;
+  heldFor: Number;
 }
 
 export interface InternalSwapData {

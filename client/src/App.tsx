@@ -4,28 +4,44 @@ import { useChainId } from "wagmi";
 import UsersChart from "./components/UserChart";
 import TvlChart from "./components/TvlChart";
 import axios, { all } from "axios";
-import type { Metrics, LeveragePosition, ServerLeveragePosition } from "./types/index";
+import type {
+  Metrics,
+  LeveragePosition,
+  ServerLeveragePosition,
+} from "./types/index";
 import LeveragePositionCard from "./components/LeveragePositionCard";
 import { updatePositionsData } from "./utils/updatePositionsData";
-import { isMatured } from "./utils";
+import { calcLeverage, isMatured } from "./utils";
 import PageTitle from "./components/low-level/PageTitle";
 import Loader from "./components/low-level/Loader";
+import arrow from "./assets/icons/arrowDown.svg";
+import Navbar from "./components/Navbar";
+import Overview from "./components/low-level/Overview";
+import YieldAnalytics from "./components/low-level/YieldAnalytics";
 
-const devTeamWallet = "0x386fB147faDb206fb7Af36438E6ae1f8583f99dd".toLowerCase();
+const devTeamWallet =
+  "0x386fB147faDb206fb7Af36438E6ae1f8583f99dd".toLowerCase();
 
 function App() {
   const [flashLeverage, setFlashLeverage] = useState<FlashLeverage>();
   const [metrics, setMetrics] = useState<Metrics[]>([]);
-  const [allLeveragePositions, setAllLeveragePositions] = useState<LeveragePosition[]>([]);
+  const [allLeveragePositions, setAllLeveragePositions] = useState<
+    LeveragePosition[]
+  >([]);
+  const [showClosed, setShowClosed] = useState(false);
 
   const appChainId = useChainId();
+
+  
 
   useEffect(() => {
     /**
      * @dev on appChainId change, reset the collateralTokens and positionManager according to the chain
      */
     async function handleChainChange() {
-      const [_flashLeverage] = await Promise.all([FlashLeverage.createInstance(appChainId)]);
+      const [_flashLeverage] = await Promise.all([
+        FlashLeverage.createInstance(appChainId),
+      ]);
       setFlashLeverage(_flashLeverage);
     }
 
@@ -47,8 +63,13 @@ function App() {
         const leverageResults = await Promise.all(
           userAddresses.map(async (address) => {
             try {
-              const userPositions = await flashLeverage.getUserLeveragePositions(address);
-              return updatePositionsData(serverLeveragePositions, address, userPositions);
+              const userPositions =
+                await flashLeverage.getUserLeveragePositions(address);
+              return updatePositionsData(
+                serverLeveragePositions,
+                address,
+                userPositions
+              );
             } catch (err) {
               console.warn(`Failed fetching positions for ${address}:`, err);
               return [];
@@ -72,7 +93,9 @@ function App() {
   // ---- Helpers ----
   const fetchServerData = async () => {
     const baseUrl =
-      import.meta.env.VITE_ENV === "prod" ? "https://api.spiralstake.xyz" : "http://localhost:5000";
+      import.meta.env.VITE_ENV === "prod"
+        ? "https://api.spiralstake.xyz"
+        : "http://localhost:5000";
 
     const [levRes, metricsRes] = await Promise.all([
       axios.get(`${baseUrl}/leveragePositions`),
@@ -119,7 +142,7 @@ function App() {
             key={i}
             leveragePosition={pos}
             flashLeverage={flashLeverage}
-            deleteLeveragePosition={() => { }}
+            deleteLeveragePosition={() => {}}
           />
         ))}
       </div>
@@ -127,32 +150,73 @@ function App() {
 
   return (
     <div className="app font-[Outfit] font-[340] relative overflow-hidden ">
-      <div className="max-w-7xl mx-auto">
-        <div className="pb-16 flex flex-col gap-[48px] py-[48px]">
-          <PageTitle title="Dashboard" subheading="Overview of all leveraged positions and performance metrics." />
-          {flashLeverage && allLeveragePositions.length ? (
-            <>
-              <div className="grid grid-cols-2 gap-6 mb-8">
-                <UsersChart metrics={metrics} />
-                <TvlChart metrics={metrics} allLeveragePositions={allLeveragePositions} />
+      <Navbar />
+
+      <div className="pb-16 flex flex-col gap-[48px] py-[48px] px-[80px]">
+        <PageTitle
+          title="Dashboard"
+          subheading="Overview of all leveraged positions and performance metrics."
+        />
+        {flashLeverage && allLeveragePositions.length ? (
+          <>
+            <div className="flex flex-col gap-[24px]">
+              {/* <UsersChart metrics={metrics} /> */}
+              <TvlChart
+                metrics={metrics}
+                allLeveragePositions={allLeveragePositions}
+              />
+              <div className="flex items-center gap-[24px]">
+                <Overview
+                  flashLeverage={flashLeverage}
+                  metrics={metrics}
+                  allLeveragePositions={allLeveragePositions}
+                />
+                <YieldAnalytics
+                  flashLeverage={flashLeverage}
+                  metrics={metrics}
+                  allLeveragePositions={allLeveragePositions}
+                />
+              </div>
+            </div>
+
+            <div className="lg:flex flex-col gap-[24px] hidden">
+              {/* open postions */}
+              {renderSection("Open Positions", categorizedPositions.open)}
+
+              {/* matured positions */}
+              <div>
+                {renderSection(
+                  "Matured Open Positions",
+                  categorizedPositions.matured
+                )}
               </div>
 
-              <div className="lg:flex flex-col gap-[14px] hidden">
-                {renderSection("Open Positions", categorizedPositions.open)}
-                <div className="mt-[50px]">
-                  {renderSection("Matured Open Positions", categorizedPositions.matured)}
+              {/* closed positions */}
+              <div>
+                <div
+                  onClick={() => setShowClosed(!showClosed)}
+                  className="flex bg-white bg-opacity-[4%] rounded-[16px] justify-between py-[24px] px-[30px] cursor-pointer"
+                >
+                  <p className="text-lg font-[400] text-gray-300">
+                    Closed Positions
+                  </p>
+                  <img
+                    src={arrow}
+                    alt=""
+                    className={`w-[24px] cursor-pointer transition-transform duration-300 ${
+                      showClosed ? "rotate-180" : ""
+                    }`}
+                  />
                 </div>
-                <div className="mt-[50px]">
-                  {renderSection("Closed Positions", categorizedPositions.closed)}
-                </div>
+                {showClosed && renderSection("", categorizedPositions.closed)}
               </div>
-            </>
-          ) : (
-            <div className={`mt-10`}>
-              <Loader />
             </div>
-          )}
-        </div>
+          </>
+        ) : (
+          <div className={`mt-10`}>
+            <Loader />
+          </div>
+        )}
       </div>
     </div>
   );
