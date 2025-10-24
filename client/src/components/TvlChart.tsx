@@ -18,21 +18,6 @@ const TvlChart = ({
   const minTvl = Math.min(...metrics.map((d) => d.tvl));
   const range = maxTvl - minTvl || 1; // Avoid division by zero
 
-  const weightedLeverage =
-    allLeveragePositions.reduce(
-      (total, pos) =>
-        pos.open
-          ? total +
-            Number(calcLeverage(pos.ltv)) * Number(pos.amountDepositedInUsd)
-          : total,
-      0
-    ) /
-    allLeveragePositions.reduce(
-      (total, pos) =>
-        pos.open ? total + Number(pos.amountDepositedInUsd) : total,
-      0
-    );
-
   return (
     <div className="bg-white bg-opacity-[4%] border-[1px] border-white border-opacity-[6%]  rounded-[16px]">
       <div className="flex items-center gap-[64px]">
@@ -69,27 +54,31 @@ const TvlChart = ({
           <div>
             <span className="text-[32px] font-[500]">
               $
-              {formatNumber((allLeveragePositions.reduce(
-                (total, pos) =>
-                  pos.open
-                    ? total +
-                      Number(calcLeverage(pos.ltv)) *
-                        Number(pos.amountDepositedInUsd)
-                    : total,
-                0
-              ) /
-                allLeveragePositions.reduce(
+              {formatNumber(
+                (allLeveragePositions.reduce(
                   (total, pos) =>
-                    pos.open ? total + Number(pos.amountDepositedInUsd) : total,
-                  0
-                )) *
-                allLeveragePositions.reduce(
-                  (total, current) =>
-                    current.open
-                      ? total + Number(current.amountDepositedInUsd)
+                    pos.open
+                      ? total +
+                        Number(calcLeverage(pos.ltv)) *
+                          Number(pos.amountDepositedInUsd)
                       : total,
                   0
-                ))}
+                ) /
+                  allLeveragePositions.reduce(
+                    (total, pos) =>
+                      pos.open
+                        ? total + Number(pos.amountDepositedInUsd)
+                        : total,
+                    0
+                  )) *
+                  allLeveragePositions.reduce(
+                    (total, current) =>
+                      current.open
+                        ? total + Number(current.amountDepositedInUsd)
+                        : total,
+                    0
+                  )
+              )}
             </span>
           </div>
         </div>

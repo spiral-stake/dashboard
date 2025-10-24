@@ -1,6 +1,7 @@
 import growth from "../../assets/icons/growth.svg";
 import FlashLeverage from "../../contract-hooks/FlashLeverage";
 import { LeveragePosition, Metrics } from "../../types";
+import { formatNumber } from "../../utils/formatNumber";
 import { HoverInfo } from "./HoverInfo";
 
 const YieldAnalytics = ({
@@ -64,20 +65,70 @@ const YieldAnalytics = ({
         <div className="flex flex-col gap-[8px]">
           <div className="flex items-center gap-[4px]">
             <p className="text-[14px] text-white opacity-[70%]">
-              Projected Yield (7D)
+              Projected Yield (30D)
             </p>
             <HoverInfo content={<p>info</p>} />
           </div>
-          <p className="text-[24px] font-[500]"></p>
+          <p className="text-[24px] font-[500]">{`$${formatNumber(
+            (((allLeveragePositions.reduce(
+              (total, pos) =>
+                pos.open
+                  ? total +
+                    (Number(pos.leverageApy) / 100) *
+                      Number(pos.amountDepositedInUsd)
+                  : total,
+              0
+            ) /
+              allLeveragePositions.reduce(
+                (total, pos) =>
+                  pos.open ? total + Number(pos.amountDepositedInUsd) : total,
+                0
+              )) *
+              100) /
+              100) *
+              allLeveragePositions.reduce(
+                (total, pos) =>
+                  pos.open ? total + Number(pos.amountDepositedInUsd) : total,
+                0
+              ) *
+              (30 / 365)
+          )}`}</p>
         </div>
         <div className="flex flex-col gap-[8px]">
           <div className="flex items-center gap-[4px]">
             <p className="text-[14px] text-white opacity-[70%]">
-              Projected Revenue
+              Projected Revenue (30D)
             </p>
             <HoverInfo content={<p>info</p>} />
           </div>
-          <p className="text-[24px] font-[500]"></p>
+          <p className="text-[24px] font-[500]">
+            $
+            {(
+              (10 / 100) *
+              ((((allLeveragePositions.reduce(
+                (total, pos) =>
+                  pos.open
+                    ? total +
+                      (Number(pos.leverageApy) / 100) *
+                        Number(pos.amountDepositedInUsd)
+                    : total,
+                0
+              ) /
+                allLeveragePositions.reduce(
+                  (total, pos) =>
+                    pos.open ? total + Number(pos.amountDepositedInUsd) : total,
+                  0
+                )) *
+                100) /
+                100) *
+                allLeveragePositions.reduce(
+                  (total, pos) =>
+                    pos.open ? total + Number(pos.amountDepositedInUsd) : total,
+                  0
+                ) *
+                (30 / 365))
+            ).toFixed(2)}
+          </p>
         </div>
       </div>
     </div>
