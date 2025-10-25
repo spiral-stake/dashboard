@@ -4,6 +4,7 @@ import type { LeveragePosition, Metrics } from "../types";
 import { formatNumber } from "../utils/formatNumber";
 import { HoverInfo } from "./low-level/HoverInfo";
 import { calcLeverage } from "../utils";
+import SmoothPurpleGraph from "./low-level/Chart";
 
 const TvlChart = ({
   metrics,
@@ -145,9 +146,17 @@ const TvlChart = ({
         </svg>
       </div> */}
 
-      <div className="w-full">
+      {/* chart functional */}
+
+      {/* <div>
+        <SmoothPurpleGraph metrics={metrics} />
+      </div> */}
+
+      {/* chart image */}
+
+      {/* <div className="w-full">
         <img src={chart} alt="" className="w-full" />
-      </div>
+      </div> */}
     </div>
   );
 };

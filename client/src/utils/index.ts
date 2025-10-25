@@ -83,3 +83,18 @@ export function daysAgo(timestamp:string) {
 
   return diffDays;
 }
+
+export function formatDate(isoString: string): string {
+  const date = new Date(isoString);
+
+  // List of short month names
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const day = date.getUTCDate();
+  const month = months[date.getUTCMonth()];
+  const year = date.getUTCFullYear();
+
+  return `${day} ${month} ${year}`;
+}
+

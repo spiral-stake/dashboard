@@ -23,7 +23,7 @@ const YieldAnalytics = ({
         <div className="flex flex-col gap-[8px]">
           <div className="flex items-center gap-[4px]">
             <p className="text-[14px] text-white opacity-[70%]">Average APY</p>
-            <HoverInfo content={<p>info</p>} />
+            {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <p className="text-[24px] font-[500]">
             {`${(
@@ -40,7 +40,7 @@ const YieldAnalytics = ({
             <p className="text-[14px] text-white opacity-[70%]">
               Weighted Avg APY
             </p>
-            <HoverInfo content={<p>info</p>} />
+            {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <p className="text-[24px] font-[500]">
             {`${(
@@ -67,7 +67,7 @@ const YieldAnalytics = ({
             <p className="text-[14px] text-white opacity-[70%]">
               Projected Yield (30D)
             </p>
-            <HoverInfo content={<p>info</p>} />
+            {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <p className="text-[24px] font-[500]">{`$${formatNumber(
             (((allLeveragePositions.reduce(
@@ -99,7 +99,7 @@ const YieldAnalytics = ({
             <p className="text-[14px] text-white opacity-[70%]">
               Projected Revenue (30D)
             </p>
-            <HoverInfo content={<p>info</p>} />
+            {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <p className="text-[24px] font-[500]">
             $

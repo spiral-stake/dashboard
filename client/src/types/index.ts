@@ -4,6 +4,7 @@ export interface Metrics {
   userCount: number;
   tvl: number;
   amountDeposited: number;
+  createdAt: number;
 }
 export interface ServerLeveragePosition {
   positionId: string;

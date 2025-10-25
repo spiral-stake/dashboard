@@ -26,7 +26,7 @@ const Overview = ({
             <p className="text-[14px] text-white opacity-[70%]">
               No. Users (Wallet Connects)
             </p>
-            <HoverInfo content={<p>info</p>} />
+            {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <p className="text-[24px] font-[500]">
             {metrics[metrics.length - 1].userCount}
@@ -37,7 +37,7 @@ const Overview = ({
             <p className="text-[14px] text-white opacity-[70%]">
               Average Deposit Size
             </p>
-            <HoverInfo content={<p>info</p>} />
+            {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <p className="text-[24px] font-[500]">
             $
@@ -54,11 +54,11 @@ const Overview = ({
         </div>
         <div className="flex flex-col gap-[8px]">
           <div className="flex items-center gap-[4px]">
-            <p className="text-[14px] text-white opacity-[70%]">Active Pools</p>
-            <HoverInfo content={<p>info</p>} />
+            <p className="text-[14px] text-white opacity-[70%]">Active Positions</p>
+            {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <p className="text-[24px] font-[500]">
-            {flashLeverage.collateralTokens.length}
+            {allLeveragePositions.filter((pos) => pos.open).length}
           </p>
         </div>
         <div className="flex flex-col gap-[8px]">
@@ -66,7 +66,7 @@ const Overview = ({
             <p className="text-[14px] text-white opacity-[70%]">
               Highest Yield Pool
             </p>
-            <HoverInfo content={<p>info</p>} />
+            {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <div className="flex items-center gap-[8px]">
             <p className="text-[24px] font-[500]">
