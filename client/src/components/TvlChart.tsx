@@ -1,8 +1,18 @@
 import { TrendingUp } from "lucide-react";
+import chart from "../assets/newChart.svg";
 import type { LeveragePosition, Metrics } from "../types";
 import { formatNumber } from "../utils/formatNumber";
+import { HoverInfo } from "./low-level/HoverInfo";
+import { calcLeverage } from "../utils";
+import SmoothPurpleGraph from "./low-level/Chart";
 
-const TvlChart = ({ metrics, allLeveragePositions }: { metrics: Metrics[], allLeveragePositions: LeveragePosition[] }) => {
+const TvlChart = ({
+  metrics,
+  allLeveragePositions,
+}: {
+  metrics: Metrics[];
+  allLeveragePositions: LeveragePosition[];
+}) => {
   if (!metrics || metrics.length === 0) return null;
 
   const maxTvl = Math.max(...metrics.map((d) => d.tvl));
@@ -10,29 +20,74 @@ const TvlChart = ({ metrics, allLeveragePositions }: { metrics: Metrics[], allLe
   const range = maxTvl - minTvl || 1; // Avoid division by zero
 
   return (
-    <div className="rounded-xl shadow-lg p-6 py-10 transition-all duration-300 hover:shadow-xl">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold">TVL</h3>
-        <div className="flex items-center space-x-2">
-          <TrendingUp className="w-5 h-5" />
-          <span className="text-2xl font-bold">
-            {formatNumber(allLeveragePositions.reduce(
-              (total, current) =>
-                current.open
-                  ? total + Number(current.amountDepositedInUsd)
-                  : total,
-              0
-            ))}
-            {" ("}
-            {allLeveragePositions.filter((pos) => pos.open).length}
-            {")"}
-          </span>
+    <div className="bg-white bg-opacity-[4%] border-[1px] border-white border-opacity-[6%]  rounded-[16px]">
+      <div className="flex items-center gap-[64px]">
+        <div className="flex flex-col p-[24px]">
+          <div className="flex items-center gap-[4px]">
+            <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
+              Total Deposits (TVL)
+            </h3>
+            <HoverInfo content={<p>info</p>} />
+          </div>
+          <div>
+            <span className="text-[32px] font-[500]">
+              $
+              {formatNumber(
+                allLeveragePositions.reduce(
+                  (total, current) =>
+                    current.open
+                      ? total + Number(current.amountDepositedInUsd)
+                      : total,
+                  0
+                )
+              )}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex flex-col p-[24px]">
+          <div className="flex items-center gap-[4px]">
+            <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
+              Open Interest (TVM)
+            </h3>
+            <HoverInfo content={<p>info</p>} />
+          </div>
+          <div>
+            <span className="text-[32px] font-[500]">
+              $
+              {formatNumber(
+                (allLeveragePositions.reduce(
+                  (total, pos) =>
+                    pos.open
+                      ? total +
+                        Number(calcLeverage(pos.ltv)) *
+                          Number(pos.amountDepositedInUsd)
+                      : total,
+                  0
+                ) /
+                  allLeveragePositions.reduce(
+                    (total, pos) =>
+                      pos.open
+                        ? total + Number(pos.amountDepositedInUsd)
+                        : total,
+                    0
+                  )) *
+                  allLeveragePositions.reduce(
+                    (total, current) =>
+                      current.open
+                        ? total + Number(current.amountDepositedInUsd)
+                        : total,
+                    0
+                  )
+              )}
+            </span>
+          </div>
         </div>
       </div>
 
-      <div className="relative h-48 mt-4">
+      {/* <div className="relative h-48 mt-4">
         <svg className="w-full h-full" viewBox="0 0 400 200">
-          {/* Grid lines */}
+          
           {[0, 1, 2, 3, 4].map((i) => (
             <line
               key={i}
@@ -45,7 +100,7 @@ const TvlChart = ({ metrics, allLeveragePositions }: { metrics: Metrics[], allLe
             />
           ))}
 
-          {/* Line path */}
+        
           <path
             d={metrics
               .map((data, index) => {
@@ -60,7 +115,6 @@ const TvlChart = ({ metrics, allLeveragePositions }: { metrics: Metrics[], allLe
             className="drop-shadow-sm"
           />
 
-          {/* Data points */}
           {metrics.map((data, index) => {
             const x = (index / (metrics.length - 1)) * 400;
             const y = 192 - ((data.tvl - minTvl) / range) * 160;
@@ -76,7 +130,7 @@ const TvlChart = ({ metrics, allLeveragePositions }: { metrics: Metrics[], allLe
             );
           })}
 
-          {/* Gradient definition */}
+          
           <defs>
             <linearGradient
               id="greenGradient"
@@ -90,9 +144,19 @@ const TvlChart = ({ metrics, allLeveragePositions }: { metrics: Metrics[], allLe
             </linearGradient>
           </defs>
         </svg>
+      </div> */}
 
-        {/* Optional X-axis labels section (commented out) */}
-      </div>
+      {/* chart functional */}
+
+      {/* <div>
+        <SmoothPurpleGraph metrics={metrics} />
+      </div> */}
+
+      {/* chart image */}
+
+      {/* <div className="w-full">
+        <img src={chart} alt="" className="w-full" />
+      </div> */}
     </div>
   );
 };
