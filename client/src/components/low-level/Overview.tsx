@@ -54,7 +54,7 @@ const Overview = ({
         </div>
         <div className="flex flex-col gap-[8px]">
           <div className="flex items-center gap-[4px]">
-            <p className="text-[14px] text-white opacity-[70%]">Active Positions</p>
+            <p className="text-[14px] text-white opacity-[70%]">Open Positions</p>
             {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <p className="text-[24px] font-[500]">
@@ -78,11 +78,10 @@ const Overview = ({
             </p>
             <div className="text-[#68EA6A]">
               <BtnGreen
-                text={`${
-                  flashLeverage.collateralTokens.reduce((max, pos) =>
-                    pos.defaultLeverageApy > max.defaultLeverageApy ? pos : max
-                  ).defaultLeverageApy
-                }% APY`}
+                text={`${flashLeverage.collateralTokens.reduce((max, pos) =>
+                  pos.defaultLeverageApy > max.defaultLeverageApy ? pos : max
+                ).defaultLeverageApy
+                  }% APY`}
               />
             </div>
           </div>

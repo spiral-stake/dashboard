@@ -27,7 +27,7 @@ const TvlChart = ({
             <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
               Total Deposits (TVL)
             </h3>
-            <HoverInfo content={<p>info</p>} />
+            {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <div>
             <span className="text-[32px] font-[500]">
@@ -50,7 +50,7 @@ const TvlChart = ({
             <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
               Open Interest (TVM)
             </h3>
-            <HoverInfo content={<p>info</p>} />
+            {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <div>
             <span className="text-[32px] font-[500]">
@@ -60,8 +60,8 @@ const TvlChart = ({
                   (total, pos) =>
                     pos.open
                       ? total +
-                        Number(calcLeverage(pos.ltv)) *
-                          Number(pos.amountDepositedInUsd)
+                      Number(calcLeverage(pos.ltv)) *
+                      Number(pos.amountDepositedInUsd)
                       : total,
                   0
                 ) /
@@ -72,13 +72,13 @@ const TvlChart = ({
                         : total,
                     0
                   )) *
-                  allLeveragePositions.reduce(
-                    (total, current) =>
-                      current.open
-                        ? total + Number(current.amountDepositedInUsd)
-                        : total,
-                    0
-                  )
+                allLeveragePositions.reduce(
+                  (total, current) =>
+                    current.open
+                      ? total + Number(current.amountDepositedInUsd)
+                      : total,
+                  0
+                )
               )}
             </span>
           </div>

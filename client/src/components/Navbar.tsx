@@ -14,7 +14,7 @@ const Navbar = () => {
                 <div className="cursor-pointer flex items-center justify-center gap-1">
                   <img src={logo} alt="" className="h-[32px] w-[32px]" />
                   <span className="hidden md:inline-flex text-[24px] font-medium">
-                    Dashboard
+                    Spiral Stake
                   </span>
                 </div>
               </div>
@@ -27,7 +27,7 @@ const Navbar = () => {
             to={"https://app.spiralstake.xyz/products"}
             className="flex items-center h-full gap-[4px] px-[14px] py-[10px] rounded-[999px] bg-white bg-opacity-[12%]"
           >
-            <p className="text-[14px]">Spiral Stake</p>
+            <p className="text-[14px]">App</p>
             <img src={externalLink} alt="" className="w-[16px] h-[16px]" />
           </Link>
         </div>
