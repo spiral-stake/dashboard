@@ -32,8 +32,6 @@ function App() {
 
   const appChainId = useChainId();
 
-  
-
   useEffect(() => {
     /**
      * @dev on appChainId change, reset the collateralTokens and positionManager according to the chain
@@ -152,7 +150,7 @@ function App() {
     <div className="app font-[Outfit] font-[340] relative overflow-hidden ">
       <Navbar />
 
-      <div className="pb-16 flex flex-col gap-[48px] py-[48px] px-[80px]">
+      <div className="lg:pb-16 flex flex-col gap-[48px] p-[16px] lg:py-[48px] lg:px-[80px]">
         <PageTitle
           title="Dashboard"
           subheading="Overview of all leveraged positions and performance metrics."
@@ -165,7 +163,7 @@ function App() {
                 metrics={metrics}
                 allLeveragePositions={allLeveragePositions}
               />
-              <div className="flex items-center gap-[24px]">
+              <div className="flex lg:flex-row flex-col items-center gap-[24px]">
                 <Overview
                   flashLeverage={flashLeverage}
                   metrics={metrics}
@@ -179,7 +177,7 @@ function App() {
               </div>
             </div>
 
-            <div className="lg:flex flex-col gap-[24px] hidden">
+            <div className="flex flex-col gap-[18px] lg:gap-[24px]">
               {/* open postions */}
               {renderSection("Open Positions", categorizedPositions.open)}
 

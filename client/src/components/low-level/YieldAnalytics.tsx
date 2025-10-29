@@ -14,7 +14,7 @@ const YieldAnalytics = ({
   flashLeverage: FlashLeverage;
 }) => {
   return (
-    <div className="w-full flex flex-col gap-[24px] bg-white bg-opacity-[4%] border-[1px] border-white border-opacity-[6%] p-[24px] rounded-[16px]">
+    <div className="w-full flex flex-col gap-[24px] bg-white bg-opacity-[4%] border-[1px] border-white border-opacity-[6%] p-[20px] lg:p-[24px] rounded-[16px]">
       <div className="flex items-center pb-[12px] gap-[8px] border-b-[1px] border-white border-opacity-[12%]">
         <img src={growth} alt="" className="w-[20px]" />
         <p className="text-[20px]">Yield Analytics</p>
