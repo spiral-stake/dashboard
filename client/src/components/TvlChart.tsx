@@ -21,8 +21,8 @@ const TvlChart = ({
 
   return (
     <div className="bg-white bg-opacity-[4%] border-[1px] border-white border-opacity-[6%]  rounded-[16px]">
-      <div className="flex items-center gap-[64px]">
-        <div className="flex flex-col p-[24px]">
+      <div className="flex lg:flex-row gap-[24px] p-[20px] lg:p-0 flex-col items-start lg:items-center lg:justify-normal lg:gap-[64px]">
+        <div className="flex flex-col p-0 lg:p-[24px]">
           <div className="flex items-center gap-[4px]">
             <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
               Total Deposits (TVL)
@@ -45,7 +45,7 @@ const TvlChart = ({
           </div>
         </div>
 
-        <div className="flex flex-col p-[24px]">
+        <div className="flex flex-col p-0 lg:p-[24px]">
           <div className="flex items-center gap-[4px]">
             <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
               Open Interest (TVM)
@@ -53,7 +53,7 @@ const TvlChart = ({
             {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <div>
-            <span className="text-[32px] font-[500]">
+            <span className="text-[24px] lg:text-[32px] font-[500]">
               $
               {formatNumber(
                 (allLeveragePositions.reduce(
@@ -148,9 +148,9 @@ const TvlChart = ({
 
       {/* chart functional */}
 
-      {/* <div>
+      <div className="w-full">
         <SmoothPurpleGraph metrics={metrics} />
-      </div> */}
+      </div>
 
       {/* chart image */}
 

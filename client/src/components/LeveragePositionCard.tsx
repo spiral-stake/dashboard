@@ -180,8 +180,9 @@ const LeveragePositionCard = ({
         }
       >
         <div className="w-full flex items-center justify-between pb-[16px] lg:pb-0 lg:border-none border-b-[1px] border-white border-opacity-[6%]">
-          <div className="flex items-center gap-[10px]">
-            <div>
+          <div className="flex lg:flex-row flex-col lg:items-center gap-[12px] lg:gap-[10px]">
+            <div className="flex gap-[10px]">
+              <div>
               <img
                 className="w-[48px]"
                 src={`/tokens/${leveragePosition.collateralToken.symbolExtended}.svg`}
@@ -193,6 +194,7 @@ const LeveragePositionCard = ({
               <div className="text-[24px] font-semibold">{`${
                 leveragePosition.collateralToken.symbol.split("-")[1]
               }`}</div>
+            </div>
             </div>
 
             <div className="text-[#68EA6A] flex items-center justify-normal gap-1">
@@ -255,7 +257,7 @@ const LeveragePositionCard = ({
           </div>
         </div>
 
-        <div className="flex flex-col gap-y-[8px] lg:grid grid-cols-[auto,auto] lg:gap-y-[14px] grid-rows-2 lg:grid-rows-1 lg:grid-cols-[1fr,1fr,1fr,1fr,1fr,1fr]">
+        <div className="flex flex-col gap-y-[12px] lg:grid grid-cols-[auto,auto] lg:gap-y-[14px] grid-rows-2 lg:grid-rows-1 lg:grid-cols-[1fr,1fr,1fr,1fr,1fr,1fr]">
           {leveragePosition.open && !matured ? (
             <OpenPositionView
               leveragePosition={leveragePosition}
@@ -270,8 +272,8 @@ const LeveragePositionCard = ({
         </div>
 
         {/* mobile close button */}
-        <div className="inline-flex lg:hidden">
-          <div className="w-full flex-row items-center gap-[8px]">
+        <div className="flex gap-[8px] lg:hidden">
+          <div className="flex-1 flex-row items-center gap-[8px]">
             {leveragePosition.open ? (
               !leveragePosition.liquidated ? (
                 <div className="flex justify-center cursor-default border-[1px] border-white border-opacity-[8%] items-center bg-opacity-[8%] text-sm font-light min-w-[80px] h-10 text-white px-2.5 py-2 rounded-full outline-none flex-1 bg-neutral-700">
@@ -288,10 +290,13 @@ const LeveragePositionCard = ({
               </div>
             )}
 
-            <MorphoLink
+            
+          </div>
+          <div className="">
+              <MorphoLink
               link={`https://app.morpho.org/ethereum/market/${leveragePosition.collateralToken.morphoMarketId}`}
             />
-          </div>
+            </div>
         </div>
 
         {showCloseReview && (
@@ -377,7 +382,7 @@ function OpenPositionView({
     <>
       <div className="col-span-1 flex justify-between lg:flex-col gap-[4px] lg:gap-[8px]">
         <p className="text-[14px] text-gray-400">Amount Deposited</p>
-        <div className="flex flex-col items-end lg:items-start gap-[8px] text-[16px]">
+        <div className="flex flex-col items-end lg:items-start lg:gap-[8px] text-[16px]">
           {displayTokenAmount(leveragePosition.amountCollateral)}{" "}
           {leveragePosition.collateralToken.symbol}
           <div className="text-[12px] lg:text-[14px] text-[#D7D7D7]">
@@ -387,13 +392,13 @@ function OpenPositionView({
       </div>
 
       <div className="col-span-1 flex justify-between lg:flex-col gap-[4px] lg:gap-[8px]">
-        <div className="flex items-center gap-[8px]">
+        <div className="flex lg:items-center gap-[8px]">
           <p className="text-[14px] text-gray-400">Long amount</p>
           <p className="text-[12px] text-[#68EA6A] font-[500]">
             {calcLeverage(leveragePosition.ltv)}x
           </p>
         </div>
-        <div className="flex flex-col items-end lg:items-start gap-[8px] text-[16px]">
+        <div className="flex flex-col items-end lg:items-start lg:gap-[8px] text-[16px]">
           {displayTokenAmount(leveragePosition.amountLeveragedCollateral)}{" "}
           {leveragePosition.collateralToken.symbol}
           <div className="text-[12px] lg:text-[14px] text-[#D7D7D7]">
@@ -409,7 +414,7 @@ function OpenPositionView({
 
       <div className="col-span-1 flex justify-between lg:flex-col gap-[4px] lg:gap-[8px]">
         <p className="text-[14px] text-gray-400">Loan amount</p>
-        <div className="flex lg:flex-col items-end lg:items-start gap-[8px] text-[16px] truncate">
+        <div className="flex flex-col items-end lg:items-start lg:gap-[8px] text-[16px] truncate">
           <div>
             {displayTokenAmount(leveragePosition.amountLoan)}{" "}
             {leveragePosition.collateralToken.loanToken.symbol}
@@ -490,7 +495,7 @@ function OpenPositionView({
 
       <div className="col-span-1 flex justify-between lg:flex-col gap-[4px] lg:gap-[8px]">
         <p className="text-[14px] text-gray-400">LTV</p>
-        <div className="flex lg:flex-col items-end lg:items-start gap-[8px] text-[16px] truncate">
+        <div className="flex flex-col items-end lg:items-start lg:gap-[8px] text-[16px] truncate">
           <div>{leveragePosition.ltv}%</div>
           <div className="text-[12px] lg:text-[14px] text-[#D7D7D7]">
             liq. {leveragePosition.collateralToken.liqLtv}%
