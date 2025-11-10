@@ -25,7 +25,7 @@ const TvlChart = ({
         <div className="flex flex-col p-0 lg:p-[24px]">
           <div className="flex items-center gap-[4px]">
             <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
-              Total Deposited (TVL)
+              Total Deposited TVL (All Time)
             </h3>
             {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
@@ -46,7 +46,7 @@ const TvlChart = ({
         <div className="flex flex-col p-0 lg:p-[24px]">
           <div className="flex items-center gap-[4px]">
             <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
-              Open Interest (TVM)
+              Open Interest TVM (All Time)
             </h3>
             {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
@@ -58,18 +58,18 @@ const TvlChart = ({
                   (total, pos) =>
                     total +
                     Number(calcLeverage(pos.ltv)) *
-                      Number(pos.amountDepositedInUsd),
+                    Number(pos.amountDepositedInUsd),
                   0
                 ) /
                   allLeveragePositions.reduce(
                     (total, pos) => total + Number(pos.amountDepositedInUsd),
                     0
                   )) *
-                  allLeveragePositions.reduce(
-                    (total, current) =>
-                      total + Number(current.amountDepositedInUsd),
-                    0
-                  )
+                allLeveragePositions.reduce(
+                  (total, current) =>
+                    total + Number(current.amountDepositedInUsd),
+                  0
+                )
               )}
             </span>
           </div>

@@ -140,7 +140,7 @@ function App() {
             key={i}
             leveragePosition={pos}
             flashLeverage={flashLeverage}
-            deleteLeveragePosition={() => {}}
+            deleteLeveragePosition={() => { }}
           />
         ))}
       </div>
@@ -179,19 +179,19 @@ function App() {
 
             <div className="flex flex-col gap-[18px] lg:gap-[24px]">
               {/* open postions */}
-              {renderSection("Open Positions", categorizedPositions.open)}
+              {/* {renderSection("Open Positions", categorizedPositions.open)} */}
 
               {/* matured positions */}
-              <div>
+              {/* <div>
                 {renderSection(
                   "Matured Open Positions",
                   categorizedPositions.matured
                 )}
-              </div>
+              </div> */}
 
               {/* closed positions */}
               <div>
-                <div
+                {/* <div
                   onClick={() => setShowClosed(!showClosed)}
                   className="flex bg-white bg-opacity-[4%] rounded-[16px] justify-between py-[24px] px-[30px] cursor-pointer"
                 >
@@ -205,8 +205,8 @@ function App() {
                       showClosed ? "rotate-180" : ""
                     }`}
                   />
-                </div>
-                {showClosed && renderSection("", categorizedPositions.closed)}
+                </div> */}
+                {/* {showClosed && renderSection("", categorizedPositions.closed)} */}
               </div>
             </div>
           </>
