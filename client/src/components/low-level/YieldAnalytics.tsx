@@ -28,10 +28,9 @@ const YieldAnalytics = ({
           <p className="text-[24px] font-[500]">
             {`${(
               allLeveragePositions.reduce(
-                (total, pos) =>
-                  pos.open ? total + Number(pos.leverageApy) : total,
+                (total, pos) => total + Number(pos.leverageApy),
                 0
-              ) / allLeveragePositions.map((position) => position.open).length
+              ) / allLeveragePositions.length
             ).toFixed(2)}%`}
           </p>
         </div>
@@ -46,16 +45,13 @@ const YieldAnalytics = ({
             {`${(
               (allLeveragePositions.reduce(
                 (total, pos) =>
-                  pos.open
-                    ? total +
-                      (Number(pos.leverageApy) / 100) *
-                        Number(pos.amountDepositedInUsd)
-                    : total,
+                  total +
+                  (Number(pos.leverageApy) / 100) *
+                    Number(pos.amountDepositedInUsd),
                 0
               ) /
                 allLeveragePositions.reduce(
-                  (total, pos) =>
-                    pos.open ? total + Number(pos.amountDepositedInUsd) : total,
+                  (total, pos) => total + Number(pos.amountDepositedInUsd),
                   0
                 )) *
               100
@@ -72,23 +68,19 @@ const YieldAnalytics = ({
           <p className="text-[24px] font-[500]">{`$${formatNumber(
             (((allLeveragePositions.reduce(
               (total, pos) =>
-                pos.open
-                  ? total +
-                    (Number(pos.leverageApy) / 100) *
-                      Number(pos.amountDepositedInUsd)
-                  : total,
+                total +
+                (Number(pos.leverageApy) / 100) *
+                  Number(pos.amountDepositedInUsd),
               0
             ) /
               allLeveragePositions.reduce(
-                (total, pos) =>
-                  pos.open ? total + Number(pos.amountDepositedInUsd) : total,
+                (total, pos) => total + Number(pos.amountDepositedInUsd),
                 0
               )) *
               100) /
               100) *
               allLeveragePositions.reduce(
-                (total, pos) =>
-                  pos.open ? total + Number(pos.amountDepositedInUsd) : total,
+                (total, pos) => total + Number(pos.amountDepositedInUsd),
                 0
               ) *
               (30 / 365)
@@ -107,23 +99,19 @@ const YieldAnalytics = ({
               (10 / 100) *
               ((((allLeveragePositions.reduce(
                 (total, pos) =>
-                  pos.open
-                    ? total +
-                      (Number(pos.leverageApy) / 100) *
-                        Number(pos.amountDepositedInUsd)
-                    : total,
+                  total +
+                  (Number(pos.leverageApy) / 100) *
+                    Number(pos.amountDepositedInUsd),
                 0
               ) /
                 allLeveragePositions.reduce(
-                  (total, pos) =>
-                    pos.open ? total + Number(pos.amountDepositedInUsd) : total,
+                  (total, pos) => total + Number(pos.amountDepositedInUsd),
                   0
                 )) *
                 100) /
                 100) *
                 allLeveragePositions.reduce(
-                  (total, pos) =>
-                    pos.open ? total + Number(pos.amountDepositedInUsd) : total,
+                  (total, pos) => total + Number(pos.amountDepositedInUsd),
                   0
                 ) *
                 (30 / 365))
