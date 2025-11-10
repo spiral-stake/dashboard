@@ -77,18 +77,25 @@ const Overview = ({
           <div className="flex items-center gap-[8px]">
             <p className="text-[24px] font-[500]">
               {
-                flashLeverage.collateralTokens.reduce((max, pos) =>
-                  pos.defaultLeverageApy > max.defaultLeverageApy ? pos : max
-                ).symbol
+                flashLeverage.collateralTokens.length > 0
+                  ? flashLeverage.collateralTokens.reduce((max, pos) =>
+                    Number(pos.defaultLeverageApy) > Number(max.defaultLeverageApy)
+                      ? pos
+                      : max
+                  ).symbol
+                  : "-"
               }
             </p>
             <div className="hidden lg:inline-flex text-[#68EA6A]">
               <BtnGreen
-                text={`${
-                  flashLeverage.collateralTokens.reduce((max, pos) =>
-                    pos.defaultLeverageApy > max.defaultLeverageApy ? pos : max
-                  ).defaultLeverageApy
-                }% APY`}
+                text={`${flashLeverage.collateralTokens.length > 0
+                  ? Math.max(
+                    ...flashLeverage.collateralTokens.map(
+                      (pos) => Number(pos.defaultLeverageApy)
+                    )
+                  )
+                  : 0
+                  }% APY`}
               />
             </div>
           </div>
