@@ -74,7 +74,7 @@ const Overview = ({
             </p>
             {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
-          <div className="flex items-center gap-[8px]">
+          <div className="lg:flex items-center gap-[8px]">
             <p className="text-[24px] font-[500]">
               {
                 flashLeverage.collateralTokens.length > 0
@@ -86,7 +86,7 @@ const Overview = ({
                   : "-"
               }
             </p>
-            <div className="hidden lg:inline-flex text-[#68EA6A]">
+            <div className=" lg:inline-flex text-[#68EA6A]">
               <BtnGreen
                 text={`${flashLeverage.collateralTokens.length > 0
                   ? Math.max(
