@@ -50,21 +50,21 @@ const Overview = ({
             {formatNumber(
               allLeveragePositions.reduce(
                 (total, current) =>
-                  current.open
-                    ? total + Number(current.amountDepositedInUsd)
-                    : total,
+                  total + Number(current.amountDepositedInUsd),
                 0
-              ) / allLeveragePositions.filter((pos) => pos.open).length
+              ) / allLeveragePositions.length
             )}
           </p>
         </div>
         <div className="flex flex-col gap-[8px]">
           <div className="flex items-center gap-[4px]">
-            <p className="text-[14px] text-white opacity-[70%]">Open Positions</p>
+            <p className="text-[14px] text-white opacity-[70%]">
+              Positions Opened
+            </p>
             {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
           <p className="text-[24px] font-[500]">
-            {allLeveragePositions.filter((pos) => pos.open).length}
+            {allLeveragePositions.length}
           </p>
         </div>
         <div className="flex flex-col gap-[8px]">
@@ -84,10 +84,11 @@ const Overview = ({
             </p>
             <div className="hidden lg:inline-flex text-[#68EA6A]">
               <BtnGreen
-                text={`${flashLeverage.collateralTokens.reduce((max, pos) =>
-                  pos.defaultLeverageApy > max.defaultLeverageApy ? pos : max
-                ).defaultLeverageApy
-                  }% APY`}
+                text={`${
+                  flashLeverage.collateralTokens.reduce((max, pos) =>
+                    pos.defaultLeverageApy > max.defaultLeverageApy ? pos : max
+                  ).defaultLeverageApy
+                }% APY`}
               />
             </div>
           </div>

@@ -25,7 +25,7 @@ const TvlChart = ({
         <div className="flex flex-col p-0 lg:p-[24px]">
           <div className="flex items-center gap-[4px]">
             <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
-              Total Deposits (TVL)
+              Total Deposited (TVL)
             </h3>
             {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
@@ -35,9 +35,7 @@ const TvlChart = ({
               {formatNumber(
                 allLeveragePositions.reduce(
                   (total, current) =>
-                    current.open
-                      ? total + Number(current.amountDepositedInUsd)
-                      : total,
+                    total + Number(current.amountDepositedInUsd),
                   0
                 )
               )}
@@ -58,27 +56,20 @@ const TvlChart = ({
               {formatNumber(
                 (allLeveragePositions.reduce(
                   (total, pos) =>
-                    pos.open
-                      ? total +
-                      Number(calcLeverage(pos.ltv)) *
-                      Number(pos.amountDepositedInUsd)
-                      : total,
+                    total +
+                    Number(calcLeverage(pos.ltv)) *
+                      Number(pos.amountDepositedInUsd),
                   0
                 ) /
                   allLeveragePositions.reduce(
-                    (total, pos) =>
-                      pos.open
-                        ? total + Number(pos.amountDepositedInUsd)
-                        : total,
+                    (total, pos) => total + Number(pos.amountDepositedInUsd),
                     0
                   )) *
-                allLeveragePositions.reduce(
-                  (total, current) =>
-                    current.open
-                      ? total + Number(current.amountDepositedInUsd)
-                      : total,
-                  0
-                )
+                  allLeveragePositions.reduce(
+                    (total, current) =>
+                      total + Number(current.amountDepositedInUsd),
+                    0
+                  )
               )}
             </span>
           </div>
@@ -149,7 +140,10 @@ const TvlChart = ({
       {/* chart functional */}
 
       <div className="w-full">
-        <SmoothPurpleGraph metrics={metrics} />
+        <SmoothPurpleGraph
+          metrics={metrics}
+          allLeveragePositions={allLeveragePositions}
+        />
       </div>
 
       {/* chart image */}
