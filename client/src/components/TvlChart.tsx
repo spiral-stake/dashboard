@@ -25,7 +25,7 @@ const TvlChart = ({
         <div className="flex flex-col p-0 lg:p-[24px]">
           <div className="flex items-center gap-[4px]">
             <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
-              Total Deposited TVL (All Time)
+              Total Deposited TVL
             </h3>
             {/* <HoverInfo content={<p>info</p>} /> */}
           </div>
@@ -46,7 +46,7 @@ const TvlChart = ({
         <div className="flex flex-col p-0 lg:p-[24px]">
           <div className="flex items-center gap-[4px]">
             <h3 className="text-[14px] font-[400] text-white opacity-[50%]">
-              Open Interest TVM (All Time)
+              Open Interest TVM
             </h3>
             {/* <HoverInfo content={<p>info</p>} /> */}
           </div>

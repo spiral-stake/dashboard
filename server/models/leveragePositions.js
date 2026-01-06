@@ -7,7 +7,6 @@ const leveragePositionSchema = new mongoose.Schema(
     amountDepositedInUsd: { type: Number, required: true },
 
     atImpliedApy: { type: Number, required: true },
-    atBorrowApy: { type: Number, required: true },
     desiredLtv: { type: Number, required: true },
 
     amountReturnedInUsd: { type: Number }, // at close

@@ -7,6 +7,7 @@ import cron from "node-cron";
 import Metrics from "./models/metrics.js";
 import { corsOption } from "./cors.js";
 import { catchAsync } from "./utils/catchAsync.js";
+import axios from "axios";
 
 const app = express();
 
@@ -130,6 +131,33 @@ const updateMetrics = async () => {
 
 app.listen(5000, () => {
   console.log("Serving on port 5000");
+
+  async function get() {
+    const HOSTED_SDK_URL = "https://aggregator-api.kyberswap.com";
+
+    const params = {
+      tokenIn: "0x03b54A6e9a984069379fae1a4fC4dBAE93B3bCCD",
+      tokenOut: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+      amountIn: "4110000000000000",
+    };
+
+    try {
+      const { data } = (
+        await axios.get(HOSTED_SDK_URL + `/137/api/v1/routes`, {
+          params,
+          headers: {
+            "X-Client-Id": "MyAwesomeApp",
+          },
+        })
+      ).data;
+
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    } // const res = await callSDK(`/${chainId}/api/v1/routes`, { ...data, sender: "" });
+  }
+
+  get();
 
   mongoose
     .connect("mongodb://127.0.0.1:27017/dashboard")

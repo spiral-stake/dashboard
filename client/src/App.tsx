@@ -190,8 +190,8 @@ function App() {
               </div> */}
 
               {/* closed positions */}
-              <div>
-                {/* <div
+              {/* <div>
+                <div
                   onClick={() => setShowClosed(!showClosed)}
                   className="flex bg-white bg-opacity-[4%] rounded-[16px] justify-between py-[24px] px-[30px] cursor-pointer"
                 >
@@ -201,13 +201,12 @@ function App() {
                   <img
                     src={arrow}
                     alt=""
-                    className={`w-[24px] cursor-pointer transition-transform duration-300 ${
-                      showClosed ? "rotate-180" : ""
-                    }`}
+                    className={`w-[24px] cursor-pointer transition-transform duration-300 ${showClosed ? "rotate-180" : ""
+                      }`}
                   />
-                </div> */}
-                {/* {showClosed && renderSection("", categorizedPositions.closed)} */}
-              </div>
+                </div>
+                {showClosed && renderSection("", categorizedPositions.closed)}
+              </div> */}
             </div>
           </>
         ) : (
